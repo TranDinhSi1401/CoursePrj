@@ -66,13 +66,18 @@ public class CourseList {
     * */
     public boolean removeCourse(Course course) {
         if(course == null) return false;
+        int temp = 0;
         for (int i = 0; i < count; i++) {
             if (courses[i].getId().equals(course.getId())) {
                 courses[i] = null;
-                return true;
+                temp = i;
             }
         }
-        return false;
+        for(int i = temp; i < count - 1; i++) {
+            courses[i] = courses[i+1];
+        }
+        count--;
+        return true;
     }
 
     /*
@@ -97,9 +102,11 @@ public class CourseList {
         int n = 0;
         Course[] courseList = new Course[10];
         for (int i = 0; i < count; i++) {
-            if (courses[i].getTitle().equalsIgnoreCase(title)) {
-                courseList[n] = courses[i];
-                n++;
+            if(courses[i] != null) {
+                if (courses[i].getTitle().equalsIgnoreCase(title)) {
+                    courseList[n] = courses[i];
+                    n++;
+                }
             }
         }
         return courseList;
@@ -134,13 +141,17 @@ public class CourseList {
         Course[] courseList = new Course[10];
         int n = 0;
         for(int i = 1; i < count; i++) {
-            if(courses[i].getCredit() > Max)
-                Max = courses[i].getCredit();
+            if(courses[i] != null) {
+                if (courses[i].getCredit() > Max)
+                    Max = courses[i].getCredit();
+            }
         }
         for(int i = 0; i < count; i++) {
-            if(courses[i].getCredit() == Max) {
-                courseList[n] = courses[i];
-                n++;
+            if(courses[i] != null) {
+                if(courses[i].getCredit() == Max) {
+                    courseList[n] = courses[i];
+                    n++;
+                }
             }
         }
         return courseList;
@@ -157,14 +168,18 @@ public class CourseList {
         int countMostDepartment;
         for(int i = 0; i < count; i++) {
             countMostDepartment = 0;
-            for(int j = 0; j < count; j++) {
-                if(courses[i].getDepartment().equals(courses[j].getDepartment())) {
-                    countMostDepartment++;
+            if(courses[i] != null) {
+                for (int j = 0; j < count; j++) {
+                    if (courses[j] != null) {
+                        if (courses[i].getDepartment().equals(courses[j].getDepartment())) {
+                            countMostDepartment++;
+                        }
+                    }
+                    if (countMostDepartment > max) {
+                        max = countMostDepartment;
+                        mostDepartment = courses[i].getDepartment();
+                    }
                 }
-            }
-            if(countMostDepartment > max) {
-                max = countMostDepartment;
-                mostDepartment = courses[i].getDepartment();
             }
         }
         return mostDepartment;

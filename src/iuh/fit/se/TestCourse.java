@@ -58,14 +58,7 @@ public class TestCourse {
                 case 3 -> {
                     System.out.println("Enter course id:");
                     String id = sc.nextLine();
-                    System.out.println("Enter course title:");
-                    String title = sc.nextLine();
-                    System.out.println("Enter course credit:");
-                    int credit = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Enter course department:");
-                    String department = sc.nextLine();
-                    Course c = new Course(id, title, credit, department);
+                    Course c = new Course(id, " ", 1, " ");
                     if(courses.removeCourse(c)) {
                         System.out.println("Course removed");
                     }else
